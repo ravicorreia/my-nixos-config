@@ -135,6 +135,7 @@
   vscode              # Text editor
   gh                  # GitHub cli
   google-chrome       # Web Browser
+  python313
   #zip
   #gnutar
   ];
