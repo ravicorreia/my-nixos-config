@@ -15,7 +15,7 @@
   boot.loader.timeout = 0;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "Nyx-desktop"; # Define your hostname.
+  networking.hostName = "nyx-desktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -43,18 +43,19 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
+  # TEST, comentei as funcoes do X11 pra ver se eu posso remover usando o wayland
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  #services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  #services.xserver.xkb = {
+  #  layout = "us";
+  #  variant = "";
+  #};
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -87,14 +88,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-    fastfetch
-    gnome-tweaks
-    ulauncher
-    wezterm
-    vscode
-    gh
-    google-chrome
-    # thunderbird
+
     ];
   };
   
@@ -102,7 +96,7 @@
   #nix.gc = {
   #  automatic = true; # Ativa o garbage collector automático.
   #  dates = "daily";  # Define quando o GC deve ser executado.
-  #  options = "--delete-older-than 30d"; # Remove gerações com mais de 30 dias.
+  #  options = "--delete-older-than 10d"; # Remove gerações com mais de 30 dias.
   #};
   
   # Configs - zsh
@@ -110,13 +104,6 @@
     enable = true;
     # Opcionalmente, torná-lo o shell padrão do sistema
     enableCompletion = true;
-  };
-  
-  # Para iniciar o ulauncher automaticamente ao logar
-  systemd.user.services.ulauncher = {
-    description = "Ulauncher";
-    wantedBy = [ "default.target" ];
-    serviceConfig.ExecStart = "${pkgs.ulauncher}/bin/ulauncher";
   };
 
   
@@ -132,16 +119,32 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  zsh
-  git
-  gnutar
-  zip
-  nodejs_22
-  tmux
-  neovim
+  wget
+  curl
+  zsh                 # Shell
+  git                 # Version Control System (VCS)
+  wezterm             # Terminal
+  nodejs_22           # Node, not shure if that is the best way to install it
+  tmux                # Terminal Multiplexer
+  neovim              # Text editor
+  #rofi-wayland        # Aplication Launcher
+  #ulauncher           # Aplication Launcher
+  wl-clipboard        # Clipboard Functionality
+  fastfetch           # A fetch, maybe I'll also test 'nitch' something like that
+  gnome-tweaks        # Gnome Tweaks...
+  vscode              # Text editor
+  gh                  # GitHub cli
+  google-chrome       # Web Browser
+  #zip
+  #gnutar
+  ];
+  
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
   
   # ---- FIM das configurações ----
+  # todos os trechos que eu editei até o momento estão nesse bloco acima.
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
