@@ -115,6 +115,20 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  
+  # Allow dynamic linking for unpackaged programs
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Aparentemente não precisei instalar nenhuma dessas libs extras, apenas ativei o nix-ld e o Mason funcionou
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+   #stdenv.cc.cc.lib  # gcc runtime libraries
+   #zlib
+   # openssl
+   # icu
+   # libxml2
+  # Add other libraries as needed based on specific language server requirements
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -135,7 +149,12 @@
   vscode              # Text editor
   gh                  # GitHub cli
   google-chrome       # Web Browser
-  python313
+  python313           # Python 3.13
+  fzf                 # Fuzy Finder
+  gcc                 # Compilor
+  clang               # Compilor
+  gnumake             # Compilor
+  binutils            # Compilor
   #zip
   #gnutar
   ];
@@ -143,6 +162,8 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
+  
+  environment.variables.EDITOR = "nvim";
   
   # ---- FIM das configurações ----
   # todos os trechos que eu editei até o momento estão nesse bloco acima.
