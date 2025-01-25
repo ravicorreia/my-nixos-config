@@ -12,7 +12,7 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.timeout = 0;
+  boot.loader.timeout = 8;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nyx-desktop"; # Define your hostname.
@@ -43,19 +43,19 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  # TEST, comentei as funcoes do X11 pra ver se eu posso remover usando o wayland
+  # TEST, comentei as funcoes do X11 pra ver se eu posso remover usando o wayland | aparentemente sim.
   # Enable the X11 windowing system.
   #services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   #services.xserver.xkb = {
   #  layout = "us";
   #  variant = "";
   #};
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -99,14 +99,13 @@
   #  options = "--delete-older-than 10d"; # Remove gerações com mais de 30 dias.
   #};
   
-  # Configs - zsh
+  # Enable zsh.
   programs.zsh = {
     enable = true;
     # Opcionalmente, torná-lo o shell padrão do sistema
     enableCompletion = true;
   };
 
-  
   # Enable flatpak use.
   services.flatpak.enable = true;
 
@@ -122,11 +121,11 @@
     # Aparentemente não precisei instalar nenhuma dessas libs extras, apenas ativei o nix-ld e o Mason funcionou
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
-   #stdenv.cc.cc.lib  # gcc runtime libraries
-   #zlib
-   # openssl
-   # icu
-   # libxml2
+    # stdenv.cc.cc.lib  # gcc runtime libraries
+    # zlib
+    # openssl
+    # icu
+    # libxml2
   # Add other libraries as needed based on specific language server requirements
   ];
 
@@ -135,7 +134,8 @@
   environment.systemPackages = with pkgs; [
   wget
   curl
-  zsh                 # Shell
+  #zsh                 # Shell
+  zoxide              # Fast cd command that learns your habits
   git                 # Version Control System (VCS)
   wezterm             # Terminal
   nodejs_22           # Node, not shure if that is the best way to install it
@@ -146,6 +146,7 @@
   wl-clipboard        # Clipboard Functionality
   fastfetch           # A fetch, maybe I'll also test 'nitch' something like that
   gnome-tweaks        # Gnome Tweaks...
+  discord             # All-in-one cross-platform voice and text chat
   vscode              # Text editor
   gh                  # GitHub cli
   google-chrome       # Web Browser
@@ -160,6 +161,11 @@
   ];
   
   fonts.packages = with pkgs; [
+    # Add individual font packages
+    ubuntu_font_family
+
+    # Add any other specific fonts you want
+    noto-fonts-cjk-sans
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
   
