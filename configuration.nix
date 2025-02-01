@@ -45,13 +45,13 @@
 
   # TEST, comentei as funcoes do X11 pra ver se eu posso remover usando o wayland | aparentemente sim.
   # Enable the X11 windowing system.
-  #services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Configure keymap in X11
-  #services.xserver.xkb = {
-  #  layout = "us";
-  #  variant = "";
-  #};
+  services.xserver.xkb = {
+   layout = "us";
+   variant = "";
+  };
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -61,7 +61,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -93,11 +93,19 @@
   };
   
   # Configuração do Garbage Collector
-  #nix.gc = {
-  #  automatic = true; # Ativa o garbage collector automático.
-  #  dates = "daily";  # Define quando o GC deve ser executado.
-  #  options = "--delete-older-than 10d"; # Remove gerações com mais de 30 dias.
-  #};
+  nix = {
+    settings = {
+      auto-optimise-store = true;  # Otimiza automaticamente o store do Nix
+      min-free = "${toString (100 * 1024 * 1024)}";  # Mantém no mínimo 100MB livre
+      max-free = "${toString (1024 * 1024 * 1024)}";  # Mantém no máximo 1GB livre
+    };
+
+    gc = {
+      automatic = true;     # Ativa a limpeza automática
+      dates = "weekly";     # Roda semanalmente
+      options = "--delete-older-than 30d";  # Remove pacotes não usados há 30+ dias
+    };
+  };
   
   # Enable zsh.
   programs.zsh = {
@@ -136,14 +144,17 @@
   curl
   #zsh                 # Shell
   zoxide              # Fast cd command that learns your habits
+  bat                 # Cat(1) clone with syntax highlighting and Git integration
+  stow                # A symlink farm manager
   git                 # Version Control System (VCS)
+  lazygit             # Simple terminal UI for git commands
   wezterm             # Terminal
+  ghostty             # Terminal
   nodejs_22           # Node, not shure if that is the best way to install it
   tmux                # Terminal Multiplexer
   neovim              # Text editor
   #rofi-wayland        # Aplication Launcher
-  #ulauncher           # Aplication Launcher
-  wl-clipboard        # Clipboard Functionality
+  wl-clipboard        # Wayland clipboard functionality
   fastfetch           # A fetch, maybe I'll also test 'nitch' something like that
   gnome-tweaks        # Gnome Tweaks...
   discord             # All-in-one cross-platform voice and text chat
@@ -156,8 +167,10 @@
   clang               # Compilor
   gnumake             # Compilor
   binutils            # Compilor
-  #zip
-  #gnutar
+  ripgrep             # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+  fd                  # Simple, fast and user-friendly alternative to find
+  unzip               # Unzipper
+  gnutar              # Unzipper
   ];
   
   fonts.packages = with pkgs; [
@@ -166,7 +179,7 @@
 
     # Add any other specific fonts you want
     noto-fonts-cjk-sans
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrains-mono
   ];
   
   environment.variables.EDITOR = "nvim";
