@@ -44,6 +44,7 @@
   };
 
   # TEST, comentei as funcoes do X11 pra ver se eu posso remover usando o wayland | aparentemente sim.
+  # mas é interessante deixar ativado por causa de programas que ainda usa o XORG
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -61,7 +62,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -81,17 +82,18 @@
 
   # ---- Minhas configurações ----
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
+
   users.users.ravicorreia = {
     isNormalUser = true;
     description = "Ravi Correia";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-
-    ];
+    packages = with pkgs; [];
   };
-  
+
   # Configuração do Garbage Collector
   nix = {
     settings = {
@@ -107,10 +109,10 @@
     };
   };
   
-  # Enable zsh.
+  #Enable zsh.
   programs.zsh = {
-    enable = true;
     # Opcionalmente, torná-lo o shell padrão do sistema
+    enable = true;
     enableCompletion = true;
   };
 
@@ -179,7 +181,7 @@
 
     # Add any other specific fonts you want
     noto-fonts-cjk-sans
-    nerd-fonts.jetbrains-mono
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
   
   environment.variables.EDITOR = "nvim";
