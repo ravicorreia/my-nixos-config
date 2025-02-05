@@ -15,7 +15,7 @@
   boot.loader.timeout = 8;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nyx-desktop"; # Define your hostname.
+  networking.hostName = "wasabi"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -62,7 +62,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -90,6 +90,7 @@
     isNormalUser = true;
     description = "Ravi Correia";
     extraGroups = [ "networkmanager" "wheel" ];
+    # Opcionalmente, torná-lo o shell padrão do sistema
     shell = pkgs.zsh;
     packages = with pkgs; [];
   };
@@ -105,13 +106,12 @@
     gc = {
       automatic = true;     # Ativa a limpeza automática
       dates = "weekly";     # Roda semanalmente
-      options = "--delete-older-than 30d";  # Remove pacotes não usados há 30+ dias
+      options = "--delete-older-than 15d";  # Remove pacotes não usados há 30+ dias
     };
   };
   
   #Enable zsh.
   programs.zsh = {
-    # Opcionalmente, torná-lo o shell padrão do sistema
     enable = true;
     enableCompletion = true;
   };
@@ -144,7 +144,6 @@
   environment.systemPackages = with pkgs; [
   wget
   curl
-  #zsh                 # Shell
   zoxide              # Fast cd command that learns your habits
   bat                 # Cat(1) clone with syntax highlighting and Git integration
   stow                # A symlink farm manager
@@ -181,7 +180,7 @@
 
     # Add any other specific fonts you want
     noto-fonts-cjk-sans
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrains-mono
   ];
   
   environment.variables.EDITOR = "nvim";
