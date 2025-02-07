@@ -15,7 +15,7 @@
   boot.loader.timeout = 8;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "wasabi"; # Define your hostname.
+  networking.hostName = "baobab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -126,8 +126,8 @@
   nixpkgs.config.allowUnfree = true;
   
   # Allow dynamic linking for unpackaged programs
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
+  # programs.nix-ld.enable = true;
+  # programs.nix-ld.libraries = with pkgs; [
     # Aparentemente não precisei instalar nenhuma dessas libs extras, apenas ativei o nix-ld e o Mason funcionou
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
@@ -137,11 +137,12 @@
     # icu
     # libxml2
   # Add other libraries as needed based on specific language server requirements
-  ];
+  # ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  home-manager        # Home Manager
   wget
   curl
   zoxide              # Fast cd command that learns your habits
@@ -172,6 +173,7 @@
   fd                  # Simple, fast and user-friendly alternative to find
   unzip               # Unzipper
   gnutar              # Unzipper
+  cargo               # Rust's package manager and build system, it handles dependencies e.g. nil_ls for nix.
   ];
   
   fonts.packages = with pkgs; [
