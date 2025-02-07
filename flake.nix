@@ -2,6 +2,8 @@
   description = "Nixos config flake";
 
   inputs = {
+    dotfiles.url = "path:./dotfiles";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgsStable.url = "github:nixos/nixpkgs/nixos-24.11";
 
@@ -29,7 +31,7 @@
       };
       homeConfigurations = {
         ravicorreia = home-manager.lib.homeManagerConfiguration {
-          specialArgs = {inherit pkgs;};
+          inherit inputs;
           # Specify your home configuration modules here, for example,
           # the path to your home.nix.
           modules = [

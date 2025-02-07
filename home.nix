@@ -5,11 +5,6 @@
   # manage.
   home.username = "ravicorreia";
   home.homeDirectory = "/home/ravicorreia";
-
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
@@ -17,10 +12,16 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+
+  nixpkgs.config.allowUnfree = true;
+
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
+
+    vlc
+    opera
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -42,7 +43,10 @@
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    ".zshrc".source = ./dotfiles/zshrc/.zshrc;
+    ".p10k.zsh".source = ./dotfiles/zshrc/.p10k.zsh;
+    ".config/nvim".source = ./dotfiles/nvim;
+    ".config/ghostty".source = ./dotfiles/ghostty;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
@@ -68,7 +72,7 @@
   #  /etc/profiles/per-user/ravicorreia/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

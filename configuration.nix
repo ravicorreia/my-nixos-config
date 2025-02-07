@@ -185,8 +185,6 @@
     nerd-fonts.jetbrains-mono
   ];
   
-  environment.variables.EDITOR = "nvim";
-  
   # ---- FIM das configurações ----
   # todos os trechos que eu editei até o momento estão nesse bloco acima.
 
