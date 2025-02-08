@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  link = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -39,21 +42,24 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    ".zshrc".source = ./dotfiles/zshrc/.zshrc;
-    ".p10k.zsh".source = ./dotfiles/zshrc/.p10k.zsh;
-    ".config/nvim".source = ./dotfiles/nvim;
-    ".config/ghostty".source = ./dotfiles/ghostty;
+home.file = {
+  # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+  # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+  # # symlink to the Nix store copy.
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
+".zshrc".source = link ~/nix-env/dotfiles/zshrc/.zshrc;
+".p10k.zsh".source = link ~/nix-env/dotfiles/zshrc/.p10k.zsh;
+".config/nvim".source = link ~/nix-env/dotfiles/nvim;
+".config/ghostty".source = link ~/nix-env/dotfiles/ghostty;
+
+  # # You can also set the file content immediately.
+  # ".gradle/gradle.properties".text = ''
+  #   org.gradle.console=verbose
+  #   org.gradle.daemon.idletimeout=3600000
+  # '';
+};
+
+
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

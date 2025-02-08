@@ -126,7 +126,7 @@
   nixpkgs.config.allowUnfree = true;
   
   # Allow dynamic linking for unpackaged programs
-  # programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true;
   # programs.nix-ld.libraries = with pkgs; [
     # Aparentemente não precisei instalar nenhuma dessas libs extras, apenas ativei o nix-ld e o Mason funcionou
     # Add any missing dynamic libraries for unpackaged programs

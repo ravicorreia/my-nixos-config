@@ -9,7 +9,23 @@ return {
         --LINHAS DE CÓDIGO ESTÃO DUPLAMENTE COMENTADAS '----'
 
         -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+        ensure_installed = { 
+          "vim",
+          "vimdoc",
+          "query",
+          "bash",
+          "html",
+          "javascript",
+          "json",
+          "lua",
+          "markdown",
+          "markdown_inline",
+          "python",
+          "regex",
+          "tsx",
+          "typescript",
+          "yaml",
+        },
 
         -- PROVAVELMENTE NÃO PRECISAREMOS DESSA OPÇÃO
         -- Install parsers synchronously (only applied to `ensure_installed`)
