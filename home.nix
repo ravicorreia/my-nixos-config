@@ -24,7 +24,7 @@ in
     # pkgs.hello
 
     vlc
-    opera
+    lazygit
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -58,8 +58,6 @@ home.file = {
   #   org.gradle.daemon.idletimeout=3600000
   # '';
 };
-
-
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

@@ -96,20 +96,17 @@
   };
 
   # Configuração do Garbage Collector
-  nix = {
-    settings = {
-      auto-optimise-store = true;  # Otimiza automaticamente o store do Nix
-      min-free = "${toString (100 * 1024 * 1024)}";  # Mantém no mínimo 100MB livre
-      max-free = "${toString (1024 * 1024 * 1024)}";  # Mantém no máximo 1GB livre
-    };
 
-    gc = {
-      automatic = true;     # Ativa a limpeza automática
-      dates = "weekly";     # Roda semanalmente
-      options = "--delete-older-than 15d";  # Remove pacotes não usados há 30+ dias
-    };
-  };
-  
+  # Automatic Updating
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.dates = "weekly";
+
+  # Automtic Cleanup
+  nix.gc.automatic = true;
+  nix.gc.dates = "daily";
+  nix.gc.options = "--delete-older-than 7d";
+  nix.settings.auto-optimise-store = true;
+
   #Enable zsh.
   programs.zsh = {
     enable = true;
@@ -124,7 +121,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   # Allow dynamic linking for unpackaged programs
   programs.nix-ld.enable = true;
   # programs.nix-ld.libraries = with pkgs; [
@@ -147,22 +144,17 @@
   curl
   zoxide              # Fast cd command that learns your habits
   bat                 # Cat(1) clone with syntax highlighting and Git integration
-  stow                # A symlink farm manager
   git                 # Version Control System (VCS)
-  lazygit             # Simple terminal UI for git commands
-  wezterm             # Terminal
   ghostty             # Terminal
   nodejs_22           # Node, not shure if that is the best way to install it
   tmux                # Terminal Multiplexer
   neovim              # Text editor
-  #rofi-wayland        # Aplication Launcher
   wl-clipboard        # Wayland clipboard functionality
   fastfetch           # A fetch, maybe I'll also test 'nitch' something like that
   gnome-tweaks        # Gnome Tweaks...
   discord             # All-in-one cross-platform voice and text chat
   vscode              # Text editor
   gh                  # GitHub cli
-  google-chrome       # Web Browser
   python313           # Python 3.13
   fzf                 # Fuzy Finder
   gcc                 # Compilor
@@ -175,7 +167,7 @@
   gnutar              # Unzipper
   cargo               # Rust's package manager and build system, it handles dependencies e.g. nil_ls for nix.
   ];
-  
+
   fonts.packages = with pkgs; [
     # Add individual font packages
     ubuntu_font_family
@@ -184,7 +176,7 @@
     noto-fonts-cjk-sans
     nerd-fonts.jetbrains-mono
   ];
-  
+
   # ---- FIM das configurações ----
   # todos os trechos que eu editei até o momento estão nesse bloco acima.
 

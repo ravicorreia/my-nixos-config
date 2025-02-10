@@ -70,3 +70,5 @@ bindkey -v
 alias inv='nvim $(fzf -m --preview="bat --color=always {}")'
 alias nv='nvim'
 alias clr='clear'
+alias lg='lazygit'
+alias q='exit'
