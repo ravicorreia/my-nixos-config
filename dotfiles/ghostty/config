@@ -1,0 +1,13 @@
+theme = rose-pine
+font-family = "JetBrainsMono Nerd Font"
+window-decoration = false
+background-opacity = 0.75
+window-padding-x = 0,0
+window-padding-y = 0,0
+window-padding-balance = true
+window-height = 42
+window-width = 148
+gtk-titlebar = false
+gtk-adwaita = false
+
+
